@@ -87,55 +87,6 @@ A robust and secure RESTful API for managing books and authors in a bookstore sy
 ## 🧪 Search Example
 
 **Search Books:**
+- GET /bookstore/books/search?query=fiction&type=genre&page=1&size=10&sort=title
 
-```http
-GET /bookstore/books/search?query=fiction&type=genre&page=1&size=10&sort=title
-
-
-**Query Parameters:**
-
-- `query`: Search term
-- `type`: `title` (default), `author`, `genre`
-- `page`, `size`, `sort`: Optional pagination and sorting
-
----
-
-## ⚙️ Configuration
-
-All sensitive configuration values are managed using **environment variables** to keep credentials secure:
-
-| Variable               | Purpose                          |
-|------------------------|----------------------------------|
-| `DB_URL`               | Database connection URL          |
-| `DB_USERNAME`          | Database username                |
-| `DB_PASSWORD`          | Database password                |
-| `JWT_SECRET`           | JWT signing key                  |
-| `JWT_EXPIRATION_TIME`  | Token validity duration (in hrs) |
-| `CLOUDINARY_URL`       | Cloudinary access key            |
-
-> ✅ Set these inside IntelliJ:  
-> **Run > Edit Configurations > Environment Variables**
-
----
-
-## 🖼️ Cover Image Upload
-
-- Book cover images are stored in Cloudinary under a clean folder structure (`/book-cover-images/...`)
-- Images are deleted when a book is deleted or updated with a new cover
-- Multipart form requests supported (max file size: 5MB)
-
----
-
-## 🧰 Error Handling
-
-All exceptions return well-structured, meaningful JSON responses. Example:
-
-```json
-{
-  "error": "Validation failed",
-  "details": {
-    "title": "Title must not be empty",
-    "pages": "Must be greater than 0"
-  }
-}
 
