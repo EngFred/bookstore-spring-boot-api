@@ -1,6 +1,7 @@
 package com.engfred.bookstore.data.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,9 +25,10 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100)
     private String firstname;
 
+    @Column(length = 100)
     private String lastname;
 
     @Column(unique = true, nullable = false, length = 100)
@@ -46,12 +48,19 @@ public class User implements UserDetails {
 
     private String imageUrl;
 
+    @Column(name = "profile_image_public_id")
+    private String profileImagePublicId;
+
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
     @CreationTimestamp
     @Column(updatable = false, name = "created_at")
     private Date createdAt;
+
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore // Prevent circular references in JSON serialization
+    private List<Book> books = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

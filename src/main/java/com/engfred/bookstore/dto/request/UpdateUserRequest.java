@@ -2,40 +2,37 @@ package com.engfred.bookstore.dto.request;
 
 import com.engfred.bookstore.data.entities.Gender;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import lombok.Data;
+import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
-@Data
-public class RegisterRequest {
+import java.util.Date;
 
-    @NotBlank(message = "First name is required")
+@Getter
+@Setter
+@Builder
+public class UpdateUserRequest {
+    @Size(max = 100, message = "Firstname cannot exceed 100 characters")
     private String firstname;
 
+    @Size(max = 100, message = "Lastname cannot exceed 100 characters")
     private String lastname;
 
-    @NotBlank(message = "Phone number is required")
+    @Email(message = "Invalid email format")
+    @Size(max = 100, message = "Email cannot exceed 100 characters")
+    private String email;
+
     @Pattern(regexp = "\\+?[0-9]{9,15}", message = "Invalid phone number")
     private String phoneNumber;
 
-    @NotBlank(message = "Address is required")
+    @Size(max = 200, message = "Address cannot exceed 200 characters")
     private String address;
-
-    @NotBlank(message = "Email is required")
-    @Email(message = "Invalid email format")
-    private String email;
-
-    private Gender gender;
 
     @Size(max = 500, message = "Bio must be less than 500 characters")
     private String bio;
 
     private MultipartFile profileImage;
 
-    @NotBlank(message = "Password is required")
-    @Size(min = 6, message = "Password must be at least 6 characters long")
-    private String password;
-
+    private Gender gender;
 }

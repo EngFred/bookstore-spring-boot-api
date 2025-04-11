@@ -25,6 +25,8 @@ public class SecurityConfiguration {
 
     private final AuthenticationProvider authenticationProvider;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final CustomAuthenticationEntryPoint authenticationEntryPoint;
+    private final CustomAccessDeniedHandler accessDeniedHandler;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -33,12 +35,26 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        //public endpoints
+                        //Public auth endpoints
                         .requestMatchers(HttpMethod.POST, "/bookstore/auth/signup/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/bookstore/auth/login/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/bookstore/authentication-docs/**").permitAll()
-                        //private endpoints
+
+                        //Public book endpoints
+                        .requestMatchers(HttpMethod.GET, "/bookstore/books").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/bookstore/books/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/bookstore/books/author/**").permitAll()
+
+                        //public author endpoints
+                        .requestMatchers(HttpMethod.GET, "/bookstore/authors").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/bookstore/authors/search").permitAll()
+
+                        //Everything else requires auth
                         .anyRequest().authenticated()
+                )
+                .exceptionHandling(ex -> ex
+                        .authenticationEntryPoint(authenticationEntryPoint)
+                        .accessDeniedHandler(accessDeniedHandler)
                 )
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)

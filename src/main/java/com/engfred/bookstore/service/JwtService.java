@@ -31,7 +31,7 @@ public class JwtService {
         return Jwts.builder()
                 .subject(email)
                 .issuedAt(Date.from(now))
-                .expiration(Date.from(now.plus(jwtExpirationTime, ChronoUnit.MINUTES)))
+                .expiration(Date.from(now.plus(jwtExpirationTime, ChronoUnit.HOURS)))
                 .signWith(getSignInKey())
                 .compact();
     }
