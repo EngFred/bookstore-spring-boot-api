@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/bookstore/books")
+@RequestMapping("/books")
 @RequiredArgsConstructor
 public class BooksControllerImpl implements BooksController {
 

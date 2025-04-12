@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 
 @RestController
-@RequestMapping("/bookstore/auth")
+@RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthenticationControllerImpl implements AuthenticationController {
 

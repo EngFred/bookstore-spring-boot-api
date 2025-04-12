@@ -36,18 +36,17 @@ public class SecurityConfiguration {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         //Public auth endpoints
-                        .requestMatchers(HttpMethod.POST, "/bookstore/auth/signup/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/bookstore/auth/login/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/bookstore/authentication-docs/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/auth/signup/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/auth/login/**").permitAll()
 
                         //Public book endpoints
-                        .requestMatchers(HttpMethod.GET, "/bookstore/books").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/bookstore/books/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/bookstore/books/author/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/books").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/books/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/books/author/**").permitAll()
 
                         //public author endpoints
-                        .requestMatchers(HttpMethod.GET, "/bookstore/authors").permitAll()
-                        .requestMatchers(HttpMethod.GET,"/bookstore/authors/search").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/authors").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/authors/search").permitAll()
 
                         //Everything else requires auth
                         .anyRequest().authenticated()

@@ -18,7 +18,7 @@ import java.util.UUID;
 
 @Slf4j
 @RestController
-@RequestMapping("/bookstore/authors")
+@RequestMapping("/authors")
 @RequiredArgsConstructor
 public class UsersControllerImpl implements UsersController {
 
